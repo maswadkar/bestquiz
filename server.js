@@ -81,8 +81,8 @@ app.put('/questions',function(req,res){
 });
 
 
-app.get('/questions/:id',function(req,res){
-        question_cursor.aggregate([{'$sample':{'size':parseInt(req.params.id)}}]).toArray(function(err,documents){console.log(req.query)
+app.get('/questions/:quizid/:count',function(req,res){
+        question_cursor.aggregate([{'$match':{'quiz_id':req.params.quizid}},{'$sample':{'size':parseInt(req.params.count)}}]).toArray(function(err,documents){console.log(req.query)
         res.json({records:documents})});
 });
 
