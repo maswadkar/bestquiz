@@ -2,7 +2,7 @@ const express = require('express');
 const mongoClient  = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 
-const url = 'mongodb://chaitra:27017';
+const url = 'mongodb://localhost:27017';
 
 var student = 'student';
 var question = 'question';
@@ -41,7 +41,7 @@ mongoClient.connect(url,{ useNewUrlParser: true }, function(err, client) {
 app.get('/students',function(req,res){
         student_cursor.find(req.query).toArray(function(err,documents){console.log(req.query)
         res.seth
-		res.json({students:documents})});
+		res.json({records:documents})});
 });
 
 app.post('/students',function(req,res){
@@ -63,7 +63,7 @@ app.put('/students',function(req,res){
 //Questions
 app.get('/questions',function(req,res){
         question_cursor.find(req.query).toArray(function(err,documents){console.log(req.query)
-        res.json({students:documents})});
+        res.json({records:documents})});
 });
 
 app.post('/questions',function(req,res){
@@ -81,11 +81,17 @@ app.put('/questions',function(req,res){
 });
 
 
+app.get('/questions/:id',function(req,res){
+        question_cursor.aggregate([{'$sample':{'size':parseInt(req.params.id)}}]).toArray(function(err,documents){console.log(req.query)
+        res.json({records:documents})});
+});
+
+
 
 //quiz
 app.get('/quiz',function(req,res){
         quiz_cursor.find(req.query).toArray(function(err,documents){console.log(req.query)
-        res.json({students:documents})});
+        res.json({records:documents})});
 });
 
 app.post('/quiz',function(req,res){
@@ -104,10 +110,11 @@ app.put('/quiz',function(req,res){
 
 
 
+
 //response
 app.get('/responses',function(req,res){
         response_cursor.find(req.query).toArray(function(err,documents){console.log(req.query)
-        res.json({students:documents})});
+        res.json({records:documents})});
 });
 
 app.post('/responses',function(req,res){
@@ -123,6 +130,3 @@ app.put('/responses',function(req,res){
         res.json({result:jj})
     })
 });
-
-
-
