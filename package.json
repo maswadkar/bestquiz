@@ -19,6 +19,6 @@
   "homepage": "https://github.com/maswadkar/bestquiz#readme",
   "dependencies": {
     "express": "^4.17.3",
-    "mongodb": "^3.1.13"
+    "mongodb": "^3.7.4"
   }
 }
